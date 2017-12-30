@@ -13,8 +13,10 @@ using Category.Domain;
 
 namespace Category.API.Controllers
 {
+    [Authorize]
     public class CategoryModelsController : ApiController
     {
+
         private DataContext db = new DataContext();
 
         // GET: api/CategoryModels

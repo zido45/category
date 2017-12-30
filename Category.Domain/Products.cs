@@ -30,5 +30,7 @@ namespace Category.Domain
         public int CategoryId { get; set; }
         [JsonIgnore]
         public virtual CategoryModel Category { get; set; }
+
+        public string Image { get; set; }
     }
 }

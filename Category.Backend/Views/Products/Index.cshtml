@@ -4,10 +4,10 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Products</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create", new { },new {@class="btn btn-primary" })
 </p>
 <table class="table">
     <tr>
@@ -19,6 +19,9 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Image)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.IsActive)
@@ -44,6 +47,13 @@
             @Html.DisplayFor(modelItem => item.Description)
         </td>
         <td>
+            @if (!string.IsNullOrEmpty(item.Image))
+                  {
+                      <img src="@Url.Content(item.Image)" alt="Image" style="width:100px;height:100px;max-width: 100%; height: auto;" />
+                  }
+
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.Price)
         </td>
         <td>
@@ -59,9 +69,9 @@
             @Html.DisplayFor(modelItem => item.LastPurchase)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ProductId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ProductId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ProductId })
+            @Html.ActionLink("Edit", "Edit", new { id = item.ProductId }) |
+            @Html.ActionLink("Details", "Details", new { id = item.ProductId }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.ProductId })
         </td>
     </tr>
 }

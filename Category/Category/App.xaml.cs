@@ -7,13 +7,14 @@ using Xamarin.Forms;
 
 namespace Category
 {
+    using Views;
 	public partial class App : Application
 	{
 		public App ()
 		{
 			InitializeComponent();
 
-			MainPage = new Category.MainPage();
+			MainPage = new NavigationPage(new LoginView());
 		}
 
 		protected override void OnStart ()

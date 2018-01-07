@@ -4,6 +4,8 @@
              x:Class="Category.Views.LoginView"
              BindingContext="{Binding Main,Source={StaticResource Locator}}"
              Title="Login">
+    
+    
     <ContentPage.Content>
         <StackLayout BindingContext="{Binding Login}"
                      Padding="8" Spacing="16">

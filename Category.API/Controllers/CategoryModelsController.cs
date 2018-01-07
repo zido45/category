@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
+using Category.API.Models;
 using Category.Domain;
 
 namespace Category.API.Controllers
@@ -20,9 +21,40 @@ namespace Category.API.Controllers
         private DataContext db = new DataContext();
 
         // GET: api/CategoryModels
-        public IQueryable<CategoryModel> GetCategoryModels()
+        public async Task<IHttpActionResult> GetCategoryModels()
         {
-            return db.CategoryModels;
+            var categories= await db.CategoryModels.ToListAsync();
+            var categoriesResponse = new List<CategoryResponse>();
+
+            foreach (var category in categories)
+            {
+                var productsResponse = new List<ProductResponse>();
+                foreach (var producto in category.Products)
+                {
+                    productsResponse.Add(new ProductResponse
+                    {
+                        ProductId=producto.ProductId,
+                        Image=producto.Image,
+                        IsActive=producto.IsActive,
+                        LastPurchase= producto.LastPurchase,
+                        Price=producto.Price,
+                        Description=producto.Description,
+                        Remarks=producto.Remarks,
+                        Stock=producto.Stock,
+
+                    });
+                }
+
+                categoriesResponse.Add(new CategoryResponse
+                {
+                        CategoryId = category.CategoryId,
+                        Description=category.Description,
+                        Products = productsResponse,
+
+                });
+            }
+
+            return Ok(categoriesResponse);
         }
 
         // GET: api/CategoryModels/5

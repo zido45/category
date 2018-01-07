@@ -1,7 +1,10 @@
 ﻿using Category.Models;
+using Category.Services;
+using GalaSoft.MvvmLight.Command;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Input;
 
 namespace Category.ViewModels
 {
@@ -12,12 +15,19 @@ namespace Category.ViewModels
         #region Propiedades
         public LoginViewModel Login { get; set; }
         public  TokenResponse Token { get; set; }
+        public ProductViewModel Products { get; set; }
         public CategoriesViewModel Categories { get; set; }
+        public NewCategoryViewModel NewCategory { get; set; }
         #endregion
 
+
+        #region Servicios
+        NavigationService navigationService;
+        #endregion
         #region Ctor
         public MainViewModel()
         {
+            navigationService = new NavigationService();
             instance = this;
             Login = new LoginViewModel();
         }
@@ -35,6 +45,24 @@ namespace Category.ViewModels
             }
 
             return instance;
+        }
+        #endregion
+
+
+        #region Commands
+        public ICommand NewCategoryCommand {
+
+            get
+            {
+                return new RelayCommand(GoNewCategory);
+            }
+
+        }
+
+        private async void GoNewCategory()
+        {
+            NewCategory = new NewCategoryViewModel();
+            await navigationService.Navigate("NewCategoryView");
         }
         #endregion
     }

@@ -1,12 +1,7 @@
 ﻿using Category.Services;
-using Category.Views;
 using GalaSoft.MvvmLight.Command;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
 using System.Windows.Input;
-using Xamarin.Forms;
 
 namespace Category.ViewModels
 {
@@ -29,6 +24,7 @@ namespace Category.ViewModels
         #region Services
         DialogService dialogService;
         ApiService apiService;
+        NavigationService navigationService;
         #endregion
 
         #region Propiedades
@@ -99,6 +95,7 @@ namespace Category.ViewModels
             IsToggled = true;
             dialogService = new DialogService();
             apiService = new ApiService();
+            navigationService = new NavigationService();
         }
         #endregion
         #region Commands
@@ -157,7 +154,8 @@ namespace Category.ViewModels
             var mainViewModel = MainViewModel.GetInstance();
             mainViewModel.Token = response;
             mainViewModel.Categories = new CategoriesViewModel();
-            await Application.Current.MainPage.Navigation.PushAsync(new CategoriesView());
+           await navigationService.Navigate("CategoriesView");
+
             Email = null;
             Password = null;
             IsRunning = false;

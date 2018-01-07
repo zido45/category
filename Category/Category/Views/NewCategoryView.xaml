@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Category.Views.NewCategoryView"
+             BindingContext="{Binding Main,Source={StaticResource Locator}}"
+             Title="Add Category">
+    <ContentPage.Content>
+        <StackLayout BindingContext="{Binding NewCategory}" Padding="10">
+            <Label Text="Category:"
+                />
+            <Entry 
+                Text="{Binding Description, Mode=TwoWay}"
+                Placeholder="Enter category description...">
+            </Entry>
+            <ActivityIndicator VerticalOptions="CenterAndExpand"  IsRunning="{Binding IsRunning,Mode=TwoWay}"></ActivityIndicator>
+            <Button Text="Save"
+                    Command="{Binding SaveCategoryCommand}"
+                    BackgroundColor="Navy"
+                    Margin="50,0"
+                    FontAttributes="Bold"
+                    IsEnabled="{Binding IsEnabled,Mode=TwoWay}"
+                    TextColor="White"
+                    HeightRequest="46"
+                    BorderRadius="23"
+                    VerticalOptions="EndAndExpand">
+
+            </Button>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

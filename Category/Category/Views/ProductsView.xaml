@@ -4,7 +4,13 @@
              x:Class="Category.Views.ProductsView"
              BindingContext="{Binding Main,Source={StaticResource Locator}}"
              Title="Products">
-    
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem 
+            Icon="add"
+            Command="{Binding NewProductCommand}"/>
+    </ContentPage.ToolbarItems>
+
     <ContentPage.Content>
         <StackLayout BindingContext="{Binding Products}" Padding="5">
             <ListView ItemsSource="{Binding Products}" HasUnevenRows="true">

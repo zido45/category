@@ -115,7 +115,29 @@ namespace Category.API.Controllers
             }
 
             db.CategoryModels.Add(categoryModel);
-            await db.SaveChangesAsync();
+
+            try
+            {
+                await db.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException!=null && ex.InnerException.InnerException!=null && ex.InnerException.InnerException.Message.Contains("Index")) 
+                {
+                    return BadRequest("Ya existe una categoria con esa descripcion");
+
+
+                }
+
+                else
+                {
+                    return BadRequest(ex.Message);
+
+
+                }
+
+            }
+           
 
             return CreatedAtRoute("DefaultApi", new { id = categoryModel.CategoryId }, categoryModel);
         }

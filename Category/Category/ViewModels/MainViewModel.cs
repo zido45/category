@@ -18,6 +18,8 @@ namespace Category.ViewModels
         public ProductViewModel Products { get; set; }
         public CategoriesViewModel Categories { get; set; }
         public NewCategoryViewModel NewCategory { get; set; }
+        public NewProductViewModel NewProduct { get; set; }
+        public EditCategoryViewModel EditCategory { get; set; }
         #endregion
 
 
@@ -63,6 +65,26 @@ namespace Category.ViewModels
         {
             NewCategory = new NewCategoryViewModel();
             await navigationService.Navigate("NewCategoryView");
+        }
+
+
+         public ICommand NewProductCommand
+        {
+
+            get
+            {
+                return new RelayCommand(GoNewProduct);
+            }
+
+        }
+
+        private async void GoNewProduct()
+        {
+
+            NewProduct = new NewProductViewModel();
+            await navigationService.Navigate("NewProductView");
+            
+       
         }
         #endregion
     }

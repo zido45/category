@@ -95,6 +95,8 @@ namespace Category.ViewModels
             IsToggled = true;
             dialogService = new DialogService();
             apiService = new ApiService();
+            Email = "zido45_dm@hotmail.com";
+            Password = "Zido45_dm";
             navigationService = new NavigationService();
         }
         #endregion

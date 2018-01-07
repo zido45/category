@@ -1,12 +1,13 @@
 ﻿using Category.Models;
 using Category.Services;
+using GalaSoft.MvvmLight.Command;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
-
+using System.Windows.Input;
 
 namespace Category.ViewModels
 {
@@ -15,6 +16,7 @@ namespace Category.ViewModels
         #region Atributos
         ObservableCollection<CategoryModel> _categories; //Esto es para que se refresque en tiempo de ejecucion la lista
         List<CategoryModel> categories;
+        bool _isRefreshing;
         #endregion
 
         #region Servicios
@@ -54,6 +56,21 @@ namespace Category.ViewModels
             }
 
         }
+        public bool IsRefreshing
+        {
+            get { return _isRefreshing; }
+            set
+            {
+                if (_isRefreshing != value)
+                {
+                    _isRefreshing = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsRefreshing)));
+                }
+            }
+
+        }
+
+
         #endregion
         #region Ctor
         public CategoriesViewModel()
@@ -66,11 +83,11 @@ namespace Category.ViewModels
 
 
         #endregion
-
-
         #region Methods
        async private void LoadCategories()
         {
+
+            IsRefreshing = true;
             var connection = await apiService.CheckConnection();
             if (!connection.IsSuccess)
             {
@@ -92,14 +109,34 @@ namespace Category.ViewModels
 
             categories =(List<CategoryModel>)response.Result;
             CategoriesList = new ObservableCollection<CategoryModel>(categories.OrderBy(c => c.Description));
-
+            IsRefreshing = false;
         }
 
         public void AddCategory(CategoryModel category)
         {
+            IsRefreshing = true;
             categories.Add(category);
             CategoriesList = new ObservableCollection<CategoryModel>(categories.OrderBy(c => c.Description));
+            IsRefreshing = false;
+        }
 
+        public void UpdateCategory(CategoryModel category)
+        {
+            IsRefreshing = true;
+            var oldCategory = categories.Where(c => c.CategoryId == category.CategoryId).FirstOrDefault();
+            oldCategory = category;
+            CategoriesList = new ObservableCollection<CategoryModel>(categories.OrderBy(c => c.Description));
+            IsRefreshing = false;
+        }
+        #endregion
+
+        #region Commands
+        public ICommand RefreshCommand {
+
+            get
+            {
+                return new RelayCommand(LoadCategories);
+            }
         }
         #endregion
     }

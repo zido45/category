@@ -1,6 +1,7 @@
 ﻿using Category.Services;
 using Category.ViewModels;
 using GalaSoft.MvvmLight.Command;
+using System;
 using System.Collections.Generic;
 using System.Windows.Input;
 
@@ -46,7 +47,30 @@ namespace Category.Models
 
 
         }
+
+        public ICommand EditCommand
+        {
+            get
+            {
+                return new RelayCommand(Edit);
+            }
+        }
+
+        private async void Edit()
+        {
+            var mainViewModel = MainViewModel.GetInstance().EditCategory = new EditCategoryViewModel(this) ;
+
+            await navigationService.Navigate("EditCategoryView");
+        }
         #endregion
 
+
+        #region Methods
+        public override int GetHashCode()
+        {
+            //esto lo hacemos para que funcione el PUT
+            return CategoryId;
+        }
+        #endregion
     }
 }

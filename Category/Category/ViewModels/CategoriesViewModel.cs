@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace Category.ViewModels
@@ -130,6 +131,42 @@ namespace Category.ViewModels
         }
         #endregion
 
+
+        public async Task DeleteCategory(CategoryModel category)
+        {
+            IsRefreshing = true;
+       
+
+        
+
+            var connection = await apiService.CheckConnection();
+            if (!connection.IsSuccess)
+            {
+                IsRefreshing = false;
+                await dialogService.ShowMessage("Error", connection.Message);
+                return;
+            }
+
+
+            var mainViewModel = MainViewModel.GetInstance();
+
+
+            var response = await apiService.Delete("http://categoryapi.azurewebsites.net", "/api", "/CategoryModels",
+                mainViewModel.Token.TokenType,
+                mainViewModel.Token.AccessToken, category);
+
+
+            if (!response.IsSuccess)
+            {
+                IsRefreshing = false;
+                await dialogService.ShowMessage("Error", response.Message);
+                return;
+            }
+
+            categories.Remove(category);
+            CategoriesList = new ObservableCollection<CategoryModel>(categories.OrderBy(c => c.Description));
+            IsRefreshing = false;
+        }
         #region Commands
         public ICommand RefreshCommand {
 

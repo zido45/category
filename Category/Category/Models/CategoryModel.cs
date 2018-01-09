@@ -19,12 +19,14 @@ namespace Category.Models
 
         #region Servicios
         NavigationService navigationService;
+        DialogService dialogService;
         #endregion
 
         #region Ctor
         public CategoryModel()
         {
             navigationService = new NavigationService();
+            dialogService = new DialogService();
         }
         #endregion
 
@@ -56,12 +58,36 @@ namespace Category.Models
             }
         }
 
+        public ICommand DeleteCommand
+        {
+            get
+            {
+                return new RelayCommand(Delete);
+            }
+        }
+
+        private async void Delete()
+        {
+            var response = await dialogService.ShowConfirm("Confirm","Are you sure to delete this record?");
+            if (!response)
+            {
+                return;
+            }
+
+            //lo borro en la otra pantalla ya que aqui no tengo nada que pintar luego
+            CategoriesViewModel.GetInstance().DeleteCategory(this);
+
+
+        }
+
         private async void Edit()
         {
             var mainViewModel = MainViewModel.GetInstance().EditCategory = new EditCategoryViewModel(this) ;
 
             await navigationService.Navigate("EditCategoryView");
         }
+
+
         #endregion
 
 

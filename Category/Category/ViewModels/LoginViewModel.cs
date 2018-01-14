@@ -95,8 +95,7 @@ namespace Category.ViewModels
             IsToggled = true;
             dialogService = new DialogService();
             apiService = new ApiService();
-            Email = "zido45_dm@hotmail.com";
-            Password = "Zido45_dm";
+         
             navigationService = new NavigationService();
         }
         #endregion
@@ -165,6 +164,20 @@ namespace Category.ViewModels
 
 
         }
+
+        public ICommand RegisterNewUserCommand
+        {
+            get
+            {
+                return new RelayCommand(RegisterNewUser);
+            }
+        }
+        async void RegisterNewUser()
+        {
+            MainViewModel.GetInstance().NewCustomer = new NewCustomerViewModel();
+            await navigationService.Navigate("NewCustomerView");
+        }
+
         #endregion
     }
 }

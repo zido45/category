@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Category.Views.NewCustomerView"
+            BindingContext="{Binding Main,Source={StaticResource Locator}}"
+             Title="New Customer">
+    <ContentPage.Content>
+        <ScrollView BindingContext="{Binding NewCustomer}">
+            <StackLayout Padding="10">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="2*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Label
+                        Grid.Column="0"
+                        Grid.Row="0"
+                        Text="Nombre:"
+                        VerticalOptions="Center">
+                    </Label>
+                    <Entry
+                        Grid.Column="1"
+                        Grid.Row="0"
+                        HeightRequest="30"
+                        Placeholder="Introduzca un nombre..."
+                        Text="{Binding FirstName,Mode=TwoWay}">
+                    </Entry>
+
+                    <Label
+                        Grid.Column="0"
+                        Grid.Row="1"
+                        Text="Apellido:"
+                        VerticalOptions="Center">
+                    </Label>
+                    <Entry
+                        Grid.Column="1"
+                        Grid.Row="1"
+                        HeightRequest="30"
+                        Placeholder="Introduzca un apellido..."
+                        Text="{Binding LastName,Mode=TwoWay}">
+                    </Entry>
+
+                    <Label
+                        Grid.Column="0"
+                        Grid.Row="2"
+                        Text="Email:"
+                        VerticalOptions="Center">
+                    </Label>
+                    <Entry
+                        Grid.Column="1"
+                        Grid.Row="2"
+                        Keyboard="Email"
+                        HeightRequest="30"
+                        Placeholder="Introduzca un email..."
+                        Text="{Binding Email,Mode=TwoWay}">
+                    </Entry>
+
+
+                    <Label
+                        Grid.Column="0"
+                        Grid.Row="3"
+                        Text="Telefono:"
+                        VerticalOptions="Center">
+                    </Label>
+                    <Entry
+                        Grid.Column="1"
+                        Grid.Row="3"
+                        HeightRequest="30"
+                        Keyboard="Telephone"
+                        Placeholder="Introduzca un telefono..."
+                        Text="{Binding Phone,Mode=TwoWay}">
+                    </Entry>
+
+                    <Label
+                        Grid.Column="0"
+                        Grid.Row="4"
+                        Text="Direccion:"
+                        VerticalOptions="Center">
+                    </Label>
+                    <Entry
+                        Grid.Column="1"
+                        Grid.Row="4"
+                        HeightRequest="30"
+                        Placeholder="Introduzca una dirección:"
+                        Text="{Binding Address,Mode=TwoWay}">
+                    </Entry>
+
+
+                    <Label
+                        Grid.Column="0"
+                        Grid.Row="5"
+                        Text="Contraseña:"
+                        VerticalOptions="Center">
+                    </Label>
+                    <Entry
+                        Grid.Column="1"
+                        Grid.Row="5"
+                        IsPassword="True"
+                        HeightRequest="30"
+                        Placeholder="Introduzca una contraseña..."
+                        Text="{Binding Password,Mode=TwoWay}">
+                    </Entry>
+
+
+                    <Label
+                        Grid.Column="0"
+                        Grid.Row="6"
+                        Text="Confirme contraseña:"
+                        VerticalOptions="Center">
+                    </Label>
+                    <Entry
+                        Grid.Column="1"
+                        Grid.Row="6"
+                        IsPassword="true"
+                        HeightRequest="30"
+                        Placeholder="Repita la contraseña..."
+                        Text="{Binding Confirm,Mode=TwoWay}">
+                    </Entry>
+                </Grid>
+
+                <ActivityIndicator
+                    IsRunning="{Binding IsRunning,Mode=TwoWay}"
+                    VerticalOptions="CenterAndExpand"></ActivityIndicator>
+
+                <Button
+                    Command="{Binding SaveCommand}"
+                    BackgroundColor="Navy"
+                    BorderRadius="23"
+                    FontAttributes="Bold"
+                    HeightRequest="46"
+                    IsEnabled="{Binding IsEnabled,Mode=TwoWay}"
+                    Margin="50,0"
+                    Text="Enviar"
+                    TextColor="White"
+                    VerticalOptions="CenterAndExpand"></Button>
+            </StackLayout>
+            
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

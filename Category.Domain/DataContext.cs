@@ -20,5 +20,7 @@ namespace Category.Domain
         public DbSet<CategoryModel> CategoryModels { get; set; }
 
         public DbSet<Products> Products { get; set; }
+
+        public System.Data.Entity.DbSet<Category.Domain.Customer> Customers { get; set; }
     }
 }

@@ -44,10 +44,15 @@ namespace Category.Services
                     await Application.Current.MainPage.Navigation.PushAsync(
                         new EditCategoryView());
                     break;
+                case "EditProductView":
+
+                    await Application.Current.MainPage.Navigation.PushAsync(
+                        new EditProductView());
+                    break;
                 default:
                     break;
             }
-        
+            
         }
 
         public async Task Back()

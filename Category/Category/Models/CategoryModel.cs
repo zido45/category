@@ -76,7 +76,7 @@ namespace Category.Models
             }
 
             //lo borro en la otra pantalla ya que aqui no tengo nada que pintar luego
-            CategoriesViewModel.GetInstance().DeleteCategory(this);
+           await  CategoriesViewModel.GetInstance().DeleteCategory(this);
 
 
         }

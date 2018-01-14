@@ -1,22 +1,26 @@
-﻿using System;
+﻿using Category.Services;
+using Category.ViewModels;
+using GalaSoft.MvvmLight.Command;
+using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Input;
 
 namespace Category.Models
 {
     public class Product
     {
-        //#region Services
-        //DialogService dialogService;
-        //NavigationService navigationService;
-        //#endregion
+        #region Services
+        DialogService dialogService;
+        NavigationService navigationService;
+        #endregion
 
         #region Properties
         public int ProductId { get; set; }
 
 
         public int CategoryId { get; set; }
-        //public Category Category { get; set; }
+        public CategoryModel Category { get; set; }
 
         public string Description { get; set; }
 
@@ -58,56 +62,60 @@ namespace Category.Models
         #endregion
 
         #region Constructors
-        //public Product()
-        //{
-        //    dialogService = new DialogService();
-        //    navigationService = new NavigationService();
-        //}
+        public Product()
+        {
+            dialogService = new DialogService();
+            navigationService = new NavigationService();
+        }
         #endregion
 
         #region Methods
-        //public override int GetHashCode()
-        //{
-        //    return ProductId;
-        //}
+        public override int GetHashCode()
+        {
+            return ProductId;
+        }
         #endregion
 
         #region Commands
-        //public ICommand DeleteCommand
-        //{
-        //    get
-        //    {
-        //        return new RelayCommand(Delete);
-        //    }
+       
+
+        public ICommand EditCommand
+    {
+        get
+        {
+            return new RelayCommand(Edit);
+        }
     }
 
-        //async void Delete()
-        //{
-        //    var response = await dialogService.ShowConfirm(
-        //        "Confirm",
-        //        "Are you sure to delete this record?");
-        //    if (!response)
-        //    {
-        //        return;
-        //    }
+        async void Edit()
+        {
+            MainViewModel.GetInstance().EditProduct =
+                new EditProductViewModel(this);
+            await navigationService.Navigate("EditProductView");
+        }
 
-        //    await ProductsViewModel.GetInstance().Delete(this);
-        //}
 
-        //public ICommand EditCommand
-        //{
-        //    get
-        //    {
-        //        return new RelayCommand(Edit);
-        //    }
-        //}
+        public ICommand DeleteCommand
+        {
+            get
+            {
+                return new RelayCommand(Delete);
+            }
+        }
 
-        //async void Edit()
-        //{
-        //    MainViewModel.GetInstance().EditProduct =
-        //        new EditProductViewModel(this);
-        //    await navigationService.NavigateOnMaster("EditProductView");
-        //}
+        private async void Delete()
+        {
+            var response = await dialogService.ShowConfirm("Confirm", "Are you sure to delete this record?");
+            if (!response)
+            {
+                return;
+            }
+
+            //lo borro en la otra pantalla ya que aqui no tengo nada que pintar luego
+            await ProductViewModel.GetInstance().DeleteProduct(this);
+
+
+        }
         #endregion
-    //}
+    }
 }

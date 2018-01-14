@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Category.Views.NewProductView"
+             x:Class="Category.Views.EditProductView"
              BindingContext="{Binding Main,Source={StaticResource Locator}}"
-             Title="New Product">
+             Title="Edit Product">
     <ContentPage.Content>
 
-        <ScrollView BindingContext="{Binding NewProduct}">
+        <ScrollView BindingContext="{Binding EditProduct}">
 
             <StackLayout Padding="10">
                 <Label Text="Product:"/>
@@ -24,19 +24,19 @@
                     <Label HorizontalOptions="StartAndExpand"
                            Text="Is Active"
                            VerticalOptions="Center">
-                        
+
                     </Label>
                     <Switch
                         HorizontalOptions="End"
                         IsToggled="{Binding IsActive,Mode=TwoWay}"
                         VerticalOptions="Center">
-                        
+
                     </Switch>
                 </StackLayout>
 
                 <Label
                     Text="Last purchase:">
-                    
+
                 </Label>
                 <DatePicker
                     Date="{Binding LastPurchase,Mode=TwoWay}">
@@ -57,10 +57,10 @@
                        WidthRequest="200">
                     <Image.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding ChangeImageCommand}">
-                            
+
                         </TapGestureRecognizer>
                     </Image.GestureRecognizers>
-                    
+
                 </Image>
 
                 <Label 
@@ -82,11 +82,11 @@
                     Text="Save"
                     TextColor="White"
                     VerticalOptions="EndAndExpand">
-                    
+
                 </Button>
             </StackLayout>
-            
+
         </ScrollView>
-  
+
     </ContentPage.Content>
 </ContentPage>

@@ -13,10 +13,22 @@
 
     <ContentPage.Content>
         <StackLayout BindingContext="{Binding Products}" Padding="5">
-            <ListView ItemsSource="{Binding Products}" HasUnevenRows="true">
+            <ListView ItemsSource="{Binding Products}" HasUnevenRows="true" IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"  RefreshCommand="{Binding RefreshCommand}"  IsPullToRefreshEnabled="True">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
+                            <ViewCell.ContextActions>
+
+                                <MenuItem
+                                    Command="{Binding EditCommand}"
+                                    Text="Edit">
+                                </MenuItem>
+                                <MenuItem
+                                    Command="{Binding DeleteCommand}"
+                                    IsDestructive="True"
+                                    Text="Delete">
+                                </MenuItem>
+                            </ViewCell.ContextActions>
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"></ColumnDefinition>

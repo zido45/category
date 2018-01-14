@@ -41,39 +41,59 @@ namespace Category.API.Controllers
         }
 
         // PUT: api/Products/5
-        [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutProducts(int id, Products products)
+        //[ResponseType(typeof(void))]
+        [ResponseType(typeof(Products))]
+        public async Task<IHttpActionResult> PutProduct(int id, ProductRequest request)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != products.ProductId)
+            if (id != request.ProductId)
             {
                 return BadRequest();
             }
 
-            db.Entry(products).State = EntityState.Modified;
+            if (request.ImageArray != null && request.ImageArray.Length > 0)
+            {
+                var stream = new MemoryStream(request.ImageArray);
+                var guid = Guid.NewGuid().ToString();
+                var file = string.Format("{0}.jpg", guid);
+                var folder = "~/Content/Images";
+                var fullPath = string.Format("{0}/{1}", folder, file);
+                var response = FilesHelper.UploadPhoto(stream, folder, file);
+
+                if (response)
+                {
+                    request.Image = fullPath;
+                }
+            }
+
+            var product = ToProduct(request);
+            db.Entry(product).State = EntityState.Modified;
 
             try
             {
                 await db.SaveChangesAsync();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception ex)
             {
-                if (!ProductsExists(id))
+                if (ex.InnerException != null &&
+                    ex.InnerException.InnerException != null &&
+                    ex.InnerException.InnerException.Message.Contains("Index"))
                 {
-                    return NotFound();
+                    return BadRequest("There are a record with the same description.");
                 }
                 else
                 {
-                    throw;
+                    return BadRequest(ex.Message);
                 }
             }
-
-            return StatusCode(HttpStatusCode.NoContent);
+            return CreatedAtRoute("DefaultApi", new { id = product.ProductId }, product);
+            //return Ok(product);
         }
+
 
         // POST: api/Products
         [ResponseType(typeof(Products))]
@@ -144,18 +164,34 @@ namespace Category.API.Controllers
 
         // DELETE: api/Products/5
         [ResponseType(typeof(Products))]
-        public async Task<IHttpActionResult> DeleteProducts(int id)
+        public async Task<IHttpActionResult> DeleteProduct(int id)
         {
-            Products products = await db.Products.FindAsync(id);
-            if (products == null)
+            Products product = await db.Products.FindAsync(id);
+            if (product == null)
             {
                 return NotFound();
             }
 
-            db.Products.Remove(products);
-            await db.SaveChangesAsync();
+            db.Products.Remove(product);
+            try
+            {
+                await db.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException != null &&
+                    ex.InnerException.InnerException != null &&
+                    ex.InnerException.InnerException.Message.Contains("REFERENCE"))
+                {
+                    return BadRequest("You can't delete this record, becase it has related record.");
+                }
+                else
+                {
+                    return BadRequest(ex.Message);
+                }
+            }
 
-            return Ok(products);
+            return Ok(product);
         }
 
         protected override void Dispose(bool disposing)

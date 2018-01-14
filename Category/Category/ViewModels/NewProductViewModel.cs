@@ -81,8 +81,6 @@ namespace Category.ViewModels
                 return _imageSource;
             }
         }
-
-
         public DateTime LastPurchase { get; set; }
         #endregion
         #region Ctor

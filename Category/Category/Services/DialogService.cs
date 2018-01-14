@@ -18,5 +18,16 @@ namespace Category.Services
            return  await Application.Current.MainPage.DisplayAlert(title, message, "Yes","No");
         }
 
+        public async Task<string> ShowImageOptions()
+        {
+            return await Application.Current.MainPage.DisplayActionSheet(
+            "¿Donde se encuentra tu imagen?",
+            "Cancelar",
+            null,
+            "Galeria",
+            "Camara");
+        }
+
+
     }
 }

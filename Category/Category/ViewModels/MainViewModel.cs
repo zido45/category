@@ -13,6 +13,8 @@ namespace Category.ViewModels
     {
 
         #region Propiedades
+
+        public CategoryModel Category { get; set; }
         public LoginViewModel Login { get; set; }
         public  TokenResponse Token { get; set; }
         public ProductViewModel Products { get; set; }

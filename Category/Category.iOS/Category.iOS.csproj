@@ -122,6 +122,9 @@
     <PackageReference Include="Xam.Plugin.Connectivity">
       <Version>3.0.2</Version>
     </PackageReference>
+    <PackageReference Include="Xam.Plugin.Media">
+      <Version>3.0.1</Version>
+    </PackageReference>
     <PackageReference Include="Xamarin.Forms" Version="2.5.0.121934" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
@@ -136,5 +139,8 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\noimage.png" />
   </ItemGroup>
 </Project>

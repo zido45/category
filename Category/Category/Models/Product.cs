@@ -14,8 +14,8 @@ namespace Category.Models
         #region Properties
         public int ProductId { get; set; }
 
-     
-        //public int CategoryId { get; set; }
+
+        public int CategoryId { get; set; }
         //public Category Category { get; set; }
 
         public string Description { get; set; }
@@ -32,7 +32,7 @@ namespace Category.Models
 
         public string Remarks { get; set; }
 
-        //public byte[] ImageArray { get; set; }
+        public byte[] ImageArray { get; set; }
 
         //public bool PendingToSave
         //{
@@ -51,7 +51,7 @@ namespace Category.Models
 
                 return string.Format(
 
-                    "http://categorybackend.azurewebsites.net/{0}",
+                    "http://categoryapi.azurewebsites.net/{0}",
                     Image.Substring(1));
             }
         }

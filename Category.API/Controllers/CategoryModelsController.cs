@@ -90,16 +90,22 @@ namespace Category.API.Controllers
             {
                 await db.SaveChangesAsync();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception ex)
             {
-                if (!CategoryModelExists(id))
+                if (ex.InnerException != null && ex.InnerException.InnerException != null && ex.InnerException.InnerException.Message.Contains("Index"))
                 {
-                    return NotFound();
+                    return BadRequest("Ya existe una categoria con esa descripcion");
+
+
                 }
+
                 else
                 {
-                    throw;
+                    return BadRequest(ex.Message);
+
+
                 }
+
             }
 
             return StatusCode(HttpStatusCode.NoContent);
@@ -153,7 +159,27 @@ namespace Category.API.Controllers
             }
 
             db.CategoryModels.Remove(categoryModel);
-            await db.SaveChangesAsync();
+            try
+            {
+                await db.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException != null && ex.InnerException.InnerException != null && ex.InnerException.InnerException.Message.Contains("REFERENCE"))
+                {
+                    return BadRequest("No puedes borrar esta categoria porque contiene productos relacionados");
+
+
+                }
+
+                else
+                {
+                    return BadRequest(ex.Message);
+
+
+                }
+
+            }
 
             return Ok(categoryModel);
         }

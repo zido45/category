@@ -31,20 +31,19 @@ namespace Category.Services
             switch (pagename)
             {
                 case "CategoriesView":
-                    await Application.Current.MainPage.Navigation.PushAsync(
+                    await App.Navigator.PushAsync(
                     new CategoriesView());
                     break;
 
                 case "ProductsView":
 
-                    await Application.Current.MainPage.Navigation.PushAsync(
-                        new ProductsView());
+                    await App.Navigator.PushAsync(
+                       new ProductsView());
                     break;
 
                 case "NewCategoryView":
-
-                    await Application.Current.MainPage.Navigation.PushAsync(
-                        new NewCategoryView());
+                    await App.Navigator.PushAsync(
+                                           new NewCategoryView());
                     break;
 
                 case "NewProductView":

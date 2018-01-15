@@ -47,6 +47,7 @@
                                     HorizontalOptions="FillAndExpand"
                                     VerticalOptions="Center"
                                     FontSize="Large"
+                                     TextColor="{StaticResource FontColor}"
                                     Text="{Binding Description}"/>
 
                                 <Image 

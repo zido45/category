@@ -46,7 +46,7 @@ namespace Category.Models
             var mainViewModel = MainViewModel.GetInstance();
             mainViewModel.Category = this; // me quedo la categoria para saber la relacion con el producto cuando cambie de pantalla
             mainViewModel.Products = new ProductViewModel(Products);
-            await navigationService.Navigate("ProductsView");
+            await navigationService.NavigateOnMaster("ProductsView");
 
 
         }
@@ -85,7 +85,7 @@ namespace Category.Models
         {
             var mainViewModel = MainViewModel.GetInstance().EditCategory = new EditCategoryViewModel(this) ;
 
-            await navigationService.Navigate("EditCategoryView");
+            await navigationService.NavigateOnMaster("EditCategoryView");
         }
 
 

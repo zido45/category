@@ -10,9 +10,23 @@ namespace Category.Services
     public class NavigationService
     {
 
-     public async Task Navigate(string pagename)
+        public void SetMainPage(string pageName)
         {
+            switch (pageName)
+            {
+                case "LoginView":
+                    Application.Current.MainPage = new NavigationPage(new LoginView());
+                    break;
+                case "MasterView":
+                    Application.Current.MainPage = new MasterView();
+                    break;
+            }
+        }
 
+
+        public async Task NavigateOnMaster(string pagename)
+        {
+            App.Master.IsPresented = false;
 
             switch (pagename)
             {
@@ -35,21 +49,33 @@ namespace Category.Services
 
                 case "NewProductView":
 
-                    await Application.Current.MainPage.Navigation.PushAsync(
+                    await App.Navigator.PushAsync(
                         new NewProductView());
                     break;
 
                 case "EditCategoryView":
 
-                    await Application.Current.MainPage.Navigation.PushAsync(
-                        new EditCategoryView());
+                    await App.Navigator.PushAsync(
+                     new EditCategoryView());
                     break;
                 case "EditProductView":
 
-                    await Application.Current.MainPage.Navigation.PushAsync(
-                        new EditProductView());
+                    await App.Navigator.PushAsync(
+                      new EditProductView());
                     break;
 
+                default:
+                    break;
+            }
+            
+        }
+        public async Task NavigateOnLogin(string pagename)
+        {
+
+
+            switch (pagename)
+            {
+               
                 case "NewCustomerView":
                     await Application.Current.MainPage.Navigation.PushAsync(
                     new NewCustomerView());
@@ -58,10 +84,15 @@ namespace Category.Services
                 default:
                     break;
             }
-            
+
         }
 
-        public async Task Back()
+        public async Task BackOnMaster()
+        {
+            await App.Navigator.PopAsync();
+        }
+
+        public async Task BackOnLogin()
         {
             await Application.Current.MainPage.Navigation.PopAsync();
         }

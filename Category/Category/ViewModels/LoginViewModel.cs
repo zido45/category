@@ -155,7 +155,7 @@ namespace Category.ViewModels
             var mainViewModel = MainViewModel.GetInstance();
             mainViewModel.Token = response;
             mainViewModel.Categories = new CategoriesViewModel();
-           await navigationService.Navigate("CategoriesView");
+            navigationService.SetMainPage("MasterView");
 
             Email = null;
             Password = null;
@@ -175,7 +175,7 @@ namespace Category.ViewModels
         async void RegisterNewUser()
         {
             MainViewModel.GetInstance().NewCustomer = new NewCustomerViewModel();
-            await navigationService.Navigate("NewCustomerView");
+            await navigationService.NavigateOnLogin("NewCustomerView");
         }
 
         #endregion

@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Category.Views.LoginView"
              BindingContext="{Binding Main,Source={StaticResource Locator}}"
+             BackgroundColor="{StaticResource BackgroundColor}"
              Title="Login">
     
     
@@ -10,6 +11,7 @@
         <StackLayout BindingContext="{Binding Login}"
                      Padding="8" Spacing="16">
             <Label Text="Products"
+                   TextColor="{StaticResource FontColor}"
                    FontSize="Large"
                 HorizontalOptions="Center" />
 
@@ -19,6 +21,7 @@
                     <ColumnDefinition Width="2*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Label Text="Email:"
+                        TextColor="{StaticResource FontColor}"
                        Grid.Column="0"
                        Grid.Row="0"
                        VerticalOptions="Center">
@@ -26,12 +29,15 @@
                 </Label>
                 <Entry Text="{Binding Email, Mode=TwoWay}"
                        Grid.Column="1"
+                        TextColor="{StaticResource FontColor}"
                        Grid.Row="0"
                        Keyboard="Email"
+                         PlaceholderColor="{StaticResource AccentColor2}"
                        Placeholder="Enter you email...">
                 </Entry>
 
                 <Label Text="Password:"
+                        TextColor="{StaticResource FontColor}"
                        Grid.Column="0"
                        Grid.Row="1"
                        VerticalOptions="Center">
@@ -39,6 +45,8 @@
                 </Label>
                 <Entry Text="{Binding Password, Mode=TwoWay}"
                        Grid.Column="1"
+                        TextColor="{StaticResource FontColor}"
+                       PlaceholderColor="{StaticResource AccentColor2}"
                        Grid.Row="1"
                        IsPassword="true"             
                        Placeholder="Enter your password...">
@@ -47,6 +55,7 @@
             </Grid>
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
                 <Label Text="Rememberme"
+                        TextColor="{StaticResource FontColor}"
                        VerticalOptions="Center">
                     
                 </Label>
@@ -56,7 +65,7 @@
             </StackLayout>
             <Label Text="Forgot your password"
                    HorizontalOptions="Center"
-                   TextColor="Blue">
+                   TextColor="{StaticResource AccentColor1}">
                 <Label.GestureRecognizers>
                 <TapGestureRecognizer 
                     Command="{Binding RecoverPasswordCommand}">
@@ -69,17 +78,17 @@
             <StackLayout Margin="50,0">
             <Button Text="Login"
                     Command="{Binding LoginCommand}"
-                    BackgroundColor="Navy"
+                    BackgroundColor="{StaticResource AccentColor2}"
                     FontAttributes="Bold"
                     IsEnabled="{Binding IsEnabled,Mode=TwoWay}"
-                    TextColor="White"
+                    TextColor="Black"
                     HeightRequest="46"
                     BorderRadius="23">
                 
             </Button>
                 <Button Text="Register New User"
                     Command="{Binding RegisterNewUserCommand}"
-                    BackgroundColor="Purple"
+                    BackgroundColor="{StaticResource AccentColor1}"
                     FontAttributes="Bold"
                     IsEnabled="{Binding IsEnabled,Mode=TwoWay}"
                     TextColor="White"
@@ -89,7 +98,7 @@
                 </Button>
                 <Button Text="Login with Facebook"
                     Command="{Binding LoginFacebookCommand}"
-                    BackgroundColor="Blue"
+                    BackgroundColor="{StaticResource MainColor}"
                     FontAttributes="Bold"
                     IsEnabled="{Binding IsEnabled,Mode=TwoWay}"
                     TextColor="White"

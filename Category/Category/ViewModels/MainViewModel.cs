@@ -3,6 +3,7 @@ using Category.Services;
 using GalaSoft.MvvmLight.Command;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows.Input;
 
@@ -13,6 +14,11 @@ namespace Category.ViewModels
     {
 
         #region Propiedades
+        public ObservableCollection<Menu> MyMenu
+        {
+            get;
+            set;
+        }
 
         public CategoryModel Category { get; set; }
         public LoginViewModel Login { get; set; }
@@ -36,7 +42,10 @@ namespace Category.ViewModels
             navigationService = new NavigationService();
             instance = this;
             Login = new LoginViewModel();
+            LoadMenu();
         }
+
+     
         #endregion
 
 
@@ -55,6 +64,28 @@ namespace Category.ViewModels
         #endregion
 
 
+        #region Methods
+        private void LoadMenu()
+        {
+            MyMenu = new ObservableCollection<Menu>();
+
+            MyMenu.Add(new Menu
+            {
+                Icon = "ic_account_circle",
+                PageName = "MyProfileView",
+                Title = "Mi perfil",
+            });
+
+
+            MyMenu.Add(new Menu
+            {
+                Icon = "ic_exit_to_app",
+                PageName = "LoginView",
+                Title = "Cerrar Sesion",
+            });
+
+        }
+        #endregion
         #region Commands
         public ICommand NewCategoryCommand {
 
@@ -68,7 +99,7 @@ namespace Category.ViewModels
         private async void GoNewCategory()
         {
             NewCategory = new NewCategoryViewModel();
-            await navigationService.Navigate("NewCategoryView");
+            await navigationService.NavigateOnMaster("NewCategoryView");
         }
 
 
@@ -86,7 +117,7 @@ namespace Category.ViewModels
         {
 
             NewProduct = new NewProductViewModel();
-            await navigationService.Navigate("NewProductView");
+            await navigationService.NavigateOnMaster("NewProductView");
             
        
         }

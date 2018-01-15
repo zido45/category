@@ -311,7 +311,7 @@ namespace Category.ViewModels
 
             ProductViewModel.GetInstance().Update(product);
 
-            await navigationService.Back();
+            await navigationService.BackOnMaster();
 
             IsRunning = false;
             IsEnabled = true;

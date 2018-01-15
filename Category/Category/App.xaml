@@ -7,6 +7,14 @@
 
         <ResourceDictionary>
             <infra:InstanceLocator x:Key="Locator"></infra:InstanceLocator>
+
+            <!-- Colors -->
+            <Color x:Key="MainColor">#3B5998</Color>
+            <Color x:Key="FontColor">#FAFAFA</Color>
+            <Color x:Key="AccentColor1">#F61666</Color>
+            <Color x:Key="AccentColor2">#DACED8</Color>
+            <Color x:Key="BackgroundColor">#3B3C58</Color>
+
         </ResourceDictionary>
 
 	</Application.Resources>

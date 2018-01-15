@@ -143,4 +143,10 @@
   <ItemGroup>
     <BundleResource Include="Resources\noimage.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_account_circle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_exit_to_app.png" />
+  </ItemGroup>
 </Project>

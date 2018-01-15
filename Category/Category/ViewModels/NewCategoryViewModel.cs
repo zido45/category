@@ -124,7 +124,7 @@ namespace Category.ViewModels
             var categoriesViewModel = CategoriesViewModel.GetInstance();
 
             categoriesViewModel.AddCategory(category);
-            await navigationService.Back();
+            await navigationService.BackOnMaster();
 
             IsRunning = false;
             IsEnabled = true;

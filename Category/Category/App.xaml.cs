@@ -10,11 +10,15 @@ namespace Category
     using Views;
 	public partial class App : Application
 	{
-		public App ()
+        public static NavigationPage Navigator { get; internal set; }
+        public static MasterView Master { get; internal set; }
+
+        public App ()
 		{
 			InitializeComponent();
 
-			MainPage = new NavigationPage(new LoginView());
+            MainPage = new NavigationPage(new LoginView());
+           // MainPage = new MasterView();
 		}
 
 		protected override void OnStart ()

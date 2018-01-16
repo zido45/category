@@ -115,10 +115,11 @@ namespace Category.ViewModels
 
         public void AddCategory(CategoryModel category)
         {
-            IsRefreshing = true;
-            categories.Add(category);
-            CategoriesList = new ObservableCollection<CategoryModel>(categories.OrderBy(c => c.Description));
-            IsRefreshing = false;
+           // IsRefreshing = true;
+            LoadCategories();
+            //categories.Add(category);
+          //  CategoriesList = new ObservableCollection<CategoryModel>(categories.OrderBy(c => c.Description));
+          //  IsRefreshing = false;
         }
 
         public void UpdateCategory(CategoryModel category)

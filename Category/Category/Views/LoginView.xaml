@@ -97,7 +97,7 @@
 
                 </Button>
                 <Button Text="Login with Facebook"
-                    Command="{Binding LoginFacebookCommand}"
+                    Command="{Binding LoginWithFacebookCommand}"
                     BackgroundColor="{StaticResource MainColor}"
                     FontAttributes="Bold"
                     IsEnabled="{Binding IsEnabled,Mode=TwoWay}"

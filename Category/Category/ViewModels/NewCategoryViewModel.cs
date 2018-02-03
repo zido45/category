@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Text;
 using System.Windows.Input;
 using Category.Models;
+using Xamarin.Forms;
 
 namespace Category.ViewModels
 {
@@ -106,8 +107,9 @@ namespace Category.ViewModels
 
             var mainViewModel = MainViewModel.GetInstance();
 
+            var urlAPI = Application.Current.Resources["URLAPI"].ToString();
 
-            var response = await apiService.Post("http://categoryapi.azurewebsites.net", "/api", "/CategoryModels",
+            var response = await apiService.Post(urlAPI, "/api", "/CategoryModels",
                 mainViewModel.Token.TokenType,
                 mainViewModel.Token.AccessToken,category);
 

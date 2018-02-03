@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Category.Views.EditProductView"
+             BackgroundColor="{StaticResource BackgroundColor}"
              BindingContext="{Binding Main,Source={StaticResource Locator}}"
              Title="Edit Product">
     <ContentPage.Content>
@@ -9,12 +10,16 @@
         <ScrollView BindingContext="{Binding EditProduct}">
 
             <StackLayout Padding="10">
-                <Label Text="Product:"/>
-                <Entry 
+                <Label 
+                      TextColor="{StaticResource AccentColor2}"
+                    Text="Product:"/>
+                <Entry
+                      TextColor="{StaticResource FontColor}"
                     Text="{Binding Description,Mode=TwoWay}"
                     Placeholder="Enter a description..."></Entry>
-                <Label Text="Price:"/>
+                <Label Text="Price:" TextColor="{StaticResource AccentColor2}" />
                 <Entry 
+                      TextColor="{StaticResource FontColor}"
                     Keyboard="Numeric"
                     Placeholder="Enter product price..."
                     Text="{Binding Price,Mode=TwoWay}"></Entry>
@@ -23,6 +28,7 @@
                 <StackLayout Orientation="Horizontal">
                     <Label HorizontalOptions="StartAndExpand"
                            Text="Is Active"
+                            TextColor="{StaticResource AccentColor2}"
                            VerticalOptions="Center">
 
                     </Label>
@@ -35,22 +41,28 @@
                 </StackLayout>
 
                 <Label
+                     TextColor="{StaticResource AccentColor2}"
                     Text="Last purchase:">
 
                 </Label>
                 <DatePicker
+                      TextColor="{StaticResource FontColor}"
                     Date="{Binding LastPurchase,Mode=TwoWay}">
                 </DatePicker>
                 <Label
+                     TextColor="{StaticResource AccentColor2}"
                     Text="Stock:">
                 </Label>
                 <Entry
+                      TextColor="{StaticResource FontColor}"
                     Keyboard="Numeric"
                     Text="{Binding Stock,Mode=TwoWay}"
                     Placeholder="Enter product stock..."></Entry>
                 <Label
+                     TextColor="{StaticResource AccentColor2}"
                     Text="Remarks:"></Label>
                 <Entry
+                      TextColor="{StaticResource FontColor}"
                     Text="{Binding Remarks,Mode=TwoWay}"></Entry>
                 <Image HeightRequest="200"
                        Source="{Binding ImageSource}"
@@ -64,6 +76,7 @@
                 </Image>
 
                 <Label 
+                    TextColor="{StaticResource AccentColor2}"
                     HorizontalOptions="Center"
                     FontSize="Small"
                     Text="Pulse la imagen para cambiarla"></Label>
@@ -73,7 +86,7 @@
                 </ActivityIndicator>
                 <Button
                     Command="{Binding SaveCommand}"
-                    BackgroundColor="Navy"
+                      BackgroundColor="{StaticResource AccentColor1}"
                     BorderRadius="23"
                     FontAttributes="Bold"
                     HeightRequest="46"

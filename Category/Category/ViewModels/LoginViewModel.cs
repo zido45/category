@@ -2,6 +2,7 @@
 using GalaSoft.MvvmLight.Command;
 using System.ComponentModel;
 using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace Category.ViewModels
 {
@@ -130,8 +131,8 @@ namespace Category.ViewModels
                 await dialogService.ShowMessage("Error",connection.Message);
                 return;
             }
-
-            var response = await apiService.GetToken("http://categoryapi.azurewebsites.net", Email, Password);
+            var urlAPI = Application.Current.Resources["URLAPI"].ToString();
+            var response = await apiService.GetToken(urlAPI, Email, Password);
 
             if (response==null)
             {
@@ -178,6 +179,24 @@ namespace Category.ViewModels
             await navigationService.NavigateOnLogin("NewCustomerView");
         }
 
+        public ICommand LoginWithFacebookCommand
+        {
+            get
+            {
+                return new RelayCommand(LoginWithFacebook);
+            }
+        }
+
+        async void LoginWithFacebook()
+        {
+            MainViewModel.GetInstance().NewCustomer = new NewCustomerViewModel();
+            await navigationService.NavigateOnLogin("LoginFacebookView");
+        }
+
+
+
         #endregion
+
+
     }
 }

@@ -227,8 +227,9 @@ namespace Category.ViewModels
                 Stock = stock,
             };
 
+            var urlAPI = Application.Current.Resources["URLAPI"].ToString();
 
-            var response = await apiService.Post("http://categoryapi.azurewebsites.net", "/api", "/Products",
+            var response = await apiService.Post(urlAPI, "/api", "/Products",
                mainViewModel.Token.TokenType,
                mainViewModel.Token.AccessToken, product);
 

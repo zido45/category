@@ -30,6 +30,8 @@ namespace Category.ViewModels
         public EditCategoryViewModel EditCategory { get; set; }
         public NewCustomerViewModel NewCustomer { get; set; }
         public EditProductViewModel EditProduct { get; set; }
+
+
         #endregion
 
 

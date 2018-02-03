@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace Category.ViewModels
 {
@@ -218,9 +219,10 @@ namespace Category.ViewModels
                 Password = Password,
                 Phone = Phone,
             };
+            var urlAPI = Application.Current.Resources["URLAPI"].ToString();
 
             var response = await apiService.Post(
-            "http://categoryapi.azurewebsites.net",
+            urlAPI,
             "/api",
             "/Customers",
             customer);
@@ -234,9 +236,10 @@ namespace Category.ViewModels
                 response.Message);
                 return;
             }
+           
 
             var response2 = await apiService.GetToken(
-            "http://categoryapi.azurewebsites.net",
+            urlAPI,
             Email,
             Password);
 

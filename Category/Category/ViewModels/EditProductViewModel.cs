@@ -288,8 +288,9 @@ namespace Category.ViewModels
             product.Remarks = Remarks;
             product.Stock = stock;
             product.ImageArray = imageArray;
+            var urlAPI = Application.Current.Resources["URLAPI"].ToString();
 
-            var response = await apiService.Put("http://categoryapi.azurewebsites.net",
+            var response = await apiService.Put(urlAPI,
                 "/api",
                 "/Products",
                 mainViewModel.Token.TokenType,

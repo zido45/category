@@ -10,15 +10,15 @@ using Xamarin.Forms.Xaml;
 namespace Category.Views
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class ProductsView : ContentPage
+	public partial class LoginFacebookView : ContentPage
 	{
-		public ProductsView ()
+		public LoginFacebookView ()
 		{
-			InitializeComponent ();
+         
+                InitializeComponent();
+            
+         
 		}
-
     
-
-
     }
 }

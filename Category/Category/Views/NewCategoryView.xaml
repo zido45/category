@@ -2,20 +2,23 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Category.Views.NewCategoryView"
+                     BackgroundColor="{StaticResource BackgroundColor}"
              BindingContext="{Binding Main,Source={StaticResource Locator}}"
              Title="Add Category">
     <ContentPage.Content>
         <StackLayout BindingContext="{Binding NewCategory}" Padding="10">
-            <Label Text="Category:"
+            <Label Text="Category:"  TextColor="{StaticResource FontColor}"
                 />
             <Entry 
+                  TextColor="{StaticResource FontColor}"
                 Text="{Binding Description, Mode=TwoWay}"
+                PlaceholderColor="{StaticResource FontColor}"
                 Placeholder="Enter category description...">
             </Entry>
             <ActivityIndicator VerticalOptions="CenterAndExpand"  IsRunning="{Binding IsRunning,Mode=TwoWay}"></ActivityIndicator>
             <Button Text="Save"
                     Command="{Binding SaveCategoryCommand}"
-                    BackgroundColor="Navy"
+                            BackgroundColor="{StaticResource AccentColor1}"
                     Margin="50,0"
                     FontAttributes="Bold"
                     IsEnabled="{Binding IsEnabled,Mode=TwoWay}"

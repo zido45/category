@@ -3,23 +3,26 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Category.Views.EditCategoryView"
              BindingContext="{Binding Main,Source={StaticResource Locator}}"
+              BackgroundColor="{StaticResource BackgroundColor}"
              Title="Edit Category">
     <ContentPage.Content>
         <StackLayout BindingContext="{Binding EditCategory}" Padding="10">
-            <Label Text="Category:"
+            <Label     TextColor="{StaticResource FontColor}" Text="Category:"
                 />
             <Entry 
                 Text="{Binding Description, Mode=TwoWay}"
-                Placeholder="Enter category description...">
+                    TextColor="{StaticResource FontColor}"
+                Placeholder="Enter category description..."
+                PlaceholderColor="{StaticResource FontColor}">
             </Entry>
             <ActivityIndicator VerticalOptions="CenterAndExpand"  IsRunning="{Binding IsRunning,Mode=TwoWay}"></ActivityIndicator>
             <Button Text="Save"
                     Command="{Binding SaveCategoryCommand}"
-                    BackgroundColor="Navy"
+                    BackgroundColor="{StaticResource AccentColor1}"
                     Margin="50,0"
                     FontAttributes="Bold"
                     IsEnabled="{Binding IsEnabled,Mode=TwoWay}"
-                    TextColor="White"
+                      TextColor="{StaticResource FontColor}"
                     HeightRequest="46"
                     BorderRadius="23"
                     VerticalOptions="EndAndExpand">

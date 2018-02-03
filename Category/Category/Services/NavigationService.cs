@@ -62,6 +62,7 @@ namespace Category.Services
                     await App.Navigator.PushAsync(
                       new EditProductView());
                     break;
+           
 
                 default:
                     break;
@@ -78,6 +79,16 @@ namespace Category.Services
                 case "NewCustomerView":
                     await Application.Current.MainPage.Navigation.PushAsync(
                     new NewCustomerView());
+                    break;
+                case "LoginFacebookView":
+
+
+                 
+                        await Application.Current.MainPage.Navigation.PushAsync(
+                      new LoginFacebookView());
+               
+
+           
                     break;
 
                 default:

@@ -9,6 +9,7 @@ using System.Windows.Input;
 using Category.Models;
 using Category.Services;
 using GalaSoft.MvvmLight.Command;
+using Xamarin.Forms;
 
 namespace Category.ViewModels
 {
@@ -132,8 +133,9 @@ namespace Category.ViewModels
 
             var mainViewModel = MainViewModel.GetInstance();
 
+            var urlAPI = Application.Current.Resources["URLAPI"].ToString();
 
-            var response = await apiService.Delete("http://categoryapi.azurewebsites.net", "/api", "/Products",
+            var response = await apiService.Delete(urlAPI, "/api", "/Products",
                 mainViewModel.Token.TokenType,
                 mainViewModel.Token.AccessToken, product);
 

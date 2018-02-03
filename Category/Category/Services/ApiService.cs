@@ -136,37 +136,37 @@ namespace Category.Services
         //    }
         //}
 
-        //public async Task<TokenResponse> LoginFacebook(
-        //    string urlBase,
-        //    string servicePrefix,
-        //    string controller,
-        //    FacebookResponse profile)
-        //{
-        //    try
-        //    {
-        //        var request = JsonConvert.SerializeObject(profile);
-        //        var content = new StringContent(
-        //            request,
-        //            Encoding.UTF8,
-        //            "application/json");
-        //        var client = new HttpClient();
-        //        client.BaseAddress = new Uri(urlBase);
-        //        var url = string.Format("{0}{1}", servicePrefix, controller);
-        //        var response = await client.PostAsync(url, content);
+        public async Task<TokenResponse> LoginFacebook(
+            string urlBase,
+            string servicePrefix,
+            string controller,
+            FacebookResponse profile)
+        {
+            try
+            {
+                var request = JsonConvert.SerializeObject(profile);
+                var content = new StringContent(
+                    request,
+                    Encoding.UTF8,
+                    "application/json");
+                var client = new HttpClient();
+                client.BaseAddress = new Uri(urlBase);
+                var url = string.Format("{0}{1}", servicePrefix, controller);
+                var response = await client.PostAsync(url, content);
 
-        //        if (!response.IsSuccessStatusCode)
-        //        {
-        //            return null;
-        //        }
+                if (!response.IsSuccessStatusCode)
+                {
+                    return null;
+                }
 
-        //        var tokenResponse = await GetToken(urlBase, profile.Id, profile.Id);
-        //        return tokenResponse;
-        //    }
-        //    catch
-        //    {
-        //        return null;
-        //    }
-        //}
+                var tokenResponse = await GetToken(urlBase, profile.Id, profile.Id);
+                return tokenResponse;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
 
 
         public async Task<TokenResponse> GetToken(

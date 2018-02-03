@@ -7,7 +7,7 @@
 
         <ResourceDictionary>
             <infra:InstanceLocator x:Key="Locator"></infra:InstanceLocator>
-
+            <x:String x:Key="URLAPI">http://categoryapi.azurewebsites.net</x:String>
             <!-- Colors -->
             <Color x:Key="MainColor">#3B5998</Color>
             <Color x:Key="FontColor">#FAFAFA</Color>

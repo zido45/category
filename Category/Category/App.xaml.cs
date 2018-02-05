@@ -17,6 +17,8 @@ namespace Category
         #region servicios
         ApiService apiService;
         DialogService dialogService;
+        DataService dataService;
+        NavigationService navigationService;
         #endregion
         public static NavigationPage Navigator { get; internal set; }
         public static MasterView Master { get; internal set; }
@@ -26,7 +28,26 @@ namespace Category
 			InitializeComponent();
             apiService = new ApiService();
             dialogService = new DialogService();
-            MainPage = new NavigationPage(new LoginView());
+            dataService = new DataService();
+            navigationService = new NavigationService();
+
+            var token = dataService.First<TokenResponse>(false);
+            if (token != null &&
+            token.IsRemembered &&
+            token.Expires > DateTime.Now)
+            {
+                var mainViewModel = MainViewModel.GetInstance();
+                mainViewModel.Token = token;
+                mainViewModel.Categories = new CategoriesViewModel();
+                navigationService.SetMainPage("MasterView");
+            }
+            else
+            {
+                navigationService.SetMainPage("LoginView");
+            }
+
+
+         //   MainPage = new NavigationPage(new LoginView());
            // MainPage = new MasterView();
 		}
 

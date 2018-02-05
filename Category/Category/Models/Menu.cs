@@ -14,6 +14,7 @@ namespace Category.Models
 
         #region Servicios
         NavigationService  navigationService;
+        DataService dataService;
         #endregion
         #region Properties
         public string Icon { get; set; }
@@ -27,6 +28,7 @@ namespace Category.Models
         public Menu()
         {
             navigationService = new NavigationService();
+            dataService = new DataService();
         }
         #endregion
         #region Comandos
@@ -39,15 +41,24 @@ namespace Category.Models
         
         }
 
-        private void Navigate()
+        private async void Navigate()
         {
             switch (PageName)
             {
                 case "LoginView":
-                    MainViewModel.GetInstance().Login = new LoginViewModel();
+                    var mainViewModel = MainViewModel.GetInstance();
+                    mainViewModel.Token.IsRemembered = false;
+                    dataService.Update(mainViewModel.Token);
+                    mainViewModel.Login = new LoginViewModel();
                     navigationService.SetMainPage("LoginView");
                     break;
-           
+
+                case "MyProfileView":
+                   MainViewModel.GetInstance().MyProfile= new MyProfileViewModel();
+                    await navigationService.NavigateOnMaster(PageName);
+                    break;
+
+
             }
         }
 

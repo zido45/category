@@ -1,6 +1,8 @@
 ﻿using Category.Services;
 using Category.ViewModels;
 using GalaSoft.MvvmLight.Command;
+using SQLite.Net.Attributes;
+using SQLiteNetExtensions.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -16,10 +18,12 @@ namespace Category.Models
         #endregion
 
         #region Properties
+        [PrimaryKey]
         public int ProductId { get; set; }
 
-
+        [ForeignKey(typeof(CategoryModel))]
         public int CategoryId { get; set; }
+        [ManyToOne]
         public CategoryModel Category { get; set; }
 
         public string Description { get; set; }

@@ -22,6 +22,8 @@ namespace Category.ViewModels
 
         public CategoryModel Category { get; set; }
         public LoginViewModel Login { get; set; }
+        public PasswordRecoveryViewModel PasswordRecovery { get; set; }
+        public MyProfileViewModel MyProfile { get; set; }
         public  TokenResponse Token { get; set; }
         public ProductViewModel Products { get; set; }
         public CategoriesViewModel Categories { get; set; }

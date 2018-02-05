@@ -19,12 +19,14 @@ namespace Category.ViewModels
         ObservableCollection<CategoryModel> _categories; //Esto es para que se refresque en tiempo de ejecucion la lista
         List<CategoryModel> categories;
         bool _isRefreshing;
+        string _filter;
         #endregion
 
         #region Servicios
         ApiService apiService;
         DialogService dialogService;
-
+        DataService dataService;
+        #endregion
         #region Singleton
         static CategoriesViewModel instance;
         public static CategoriesViewModel GetInstance()
@@ -41,9 +43,20 @@ namespace Category.ViewModels
 
         #region Metodos
         public event PropertyChangedEventHandler PropertyChanged;
+        void SaveCategoriesOnDB()
+        {
+            dataService.DeleteAll<CategoryModel>();
+            dataService.DeleteAll<Product>();
+
+            foreach (var category in categories)
+            {
+                dataService.Insert(category);
+                dataService.Save(category.Products);
+            }
+        }
 
         #endregion
-        #endregion
+
 
         #region Properties
         public ObservableCollection<CategoryModel> CategoriesList
@@ -72,6 +85,24 @@ namespace Category.ViewModels
 
         }
 
+        public string Filter
+        {
+            get
+            {
+                return _filter;
+            }
+            set
+            {
+                if (_filter != value)
+                {
+                    _filter = value;
+                    Search();
+                    PropertyChanged?.Invoke(
+                    this,
+                    new PropertyChangedEventArgs(nameof(Filter)));
+                }
+            }
+        }
 
         #endregion
         #region Ctor
@@ -80,6 +111,7 @@ namespace Category.ViewModels
             instance = this;
             dialogService = new DialogService();
             apiService = new ApiService();
+            dataService = new DataService();
             LoadCategories();
         }
 
@@ -93,24 +125,37 @@ namespace Category.ViewModels
             var connection = await apiService.CheckConnection();
             if (!connection.IsSuccess)
             {
-                await dialogService.ShowMessage("Error",connection.Message);
+                categories = dataService.Get<CategoryModel>(true);
+                if (categories.Count==0)
+                {
+                    await dialogService.ShowMessage("Error", connection.Message);
+                    return;
+                }
+
             }
-
-            var mainViewModel = MainViewModel.GetInstance();
-            var urlAPI = Application.Current.Resources["URLAPI"].ToString();
-
-            var response = await apiService.GetList<CategoryModel>(urlAPI, "/api", "/CategoryModels", mainViewModel.Token.TokenType,mainViewModel.Token.AccessToken);
-
-            if (!response.IsSuccess)
+            else
             {
-                await dialogService.ShowMessage("Error", response.Message);
+
+                var mainViewModel = MainViewModel.GetInstance();
+                var urlAPI = Application.Current.Resources["URLAPI"].ToString();
+
+                var response = await apiService.GetList<CategoryModel>(urlAPI, "/api", "/CategoryModels", mainViewModel.Token.TokenType, mainViewModel.Token.AccessToken);
+
+                if (!response.IsSuccess)
+                {
+                    await dialogService.ShowMessage("Error", response.Message);
+
+                }
+
+                //si llego hasta aqui ya tengo mi lista de categorias
+
+
+                categories = (List<CategoryModel>)response.Result;
+                SaveCategoriesOnDB();
 
             }
 
-            //si llego hasta aqui ya tengo mi lista de categorias
-
-
-            categories =(List<CategoryModel>)response.Result;
+           // Search();
             CategoriesList = new ObservableCollection<CategoryModel>(categories.OrderBy(c => c.Description));
             IsRefreshing = false;
         }
@@ -179,6 +224,37 @@ namespace Category.ViewModels
                 return new RelayCommand(LoadCategories);
             }
         }
+
+        public ICommand SearchCommand
+        {
+            get
+            {
+                return new RelayCommand(Search);
+            }
+        }
+
+
+        void Search()
+        {
+            IsRefreshing = true;
+
+            if (string.IsNullOrEmpty(Filter))
+            {
+                CategoriesList = new ObservableCollection<CategoryModel>(
+                categories.OrderBy(c => c.Description));
+            }
+            else
+            {
+                CategoriesList = new ObservableCollection<CategoryModel>(categories
+                .Where(c => c.Description.ToLower().Contains(Filter.ToLower()))
+                .OrderBy(c => c.Description));
+            }
+
+            IsRefreshing = false;
+        }
+
+
+
         #endregion
     }
 }

@@ -62,7 +62,12 @@ namespace Category.Services
                     await App.Navigator.PushAsync(
                       new EditProductView());
                     break;
-           
+
+                case "MyProfileView":
+
+                    await App.Navigator.PushAsync(
+                      new MyProfileView());
+                    break;
 
                 default:
                     break;
@@ -86,9 +91,11 @@ namespace Category.Services
                  
                         await Application.Current.MainPage.Navigation.PushAsync(
                       new LoginFacebookView());
-               
 
-           
+                    break;
+                case "PasswordRecoveryView":
+                    await Application.Current.MainPage.Navigation.PushAsync(
+                    new PasswordRecoveryView());
                     break;
 
                 default:

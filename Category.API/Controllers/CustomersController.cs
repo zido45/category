@@ -10,10 +10,12 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
+using Category.API.Helpers;
 using Category.API.Models;
 using Category.Domain;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Newtonsoft.Json.Linq;
 
 namespace Category.API.Controllers
 {
@@ -23,6 +25,108 @@ namespace Category.API.Controllers
     public class CustomersController : ApiController
     {
         private DataContext db = new DataContext();
+
+
+        [HttpPost]
+        [Route("PasswordRecovery")]
+        public async Task<IHttpActionResult> PasswordRecovery(JObject form)
+        {
+            try
+            {
+                var email = string.Empty;
+                dynamic jsonObject = form;
+
+                try
+                {
+                    email = jsonObject.Email.Value;
+                }
+                catch
+                {
+                    return BadRequest("Incorrect call.");
+                }
+
+                var customer = await db.Customers
+                  .Where(u => u.Email.ToLower() == email.ToLower())
+                  .FirstOrDefaultAsync();
+                if (customer == null)
+                {
+                    return NotFound();
+                }
+
+                var userContext = new ApplicationDbContext();
+                var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(userContext));
+                var userASP = userManager.FindByEmail(email);
+                if (userASP == null)
+                {
+                    return NotFound();
+                }
+
+                var random = new Random();
+                var newPassword = string.Format("{0}", random.Next(100000, 999999));
+                var response1 = userManager.RemovePassword(userASP.Id);
+                var response2 = await userManager.AddPasswordAsync(userASP.Id, newPassword);
+                if (response2.Succeeded)
+                {
+                    var subject = "Products - Password Recovery";
+                    var body = string.Format(@"
+                <h1>Products App - Password Recovery</h1>
+                <p>Your new password is: <strong>{0}</strong></p>
+                <p>Please, don't forget change it for one easy remember for you.",
+                      newPassword);
+
+                    await MailHelper.SendMail(email, subject, body);
+                    return Ok(true);
+                }
+
+                return BadRequest("The password can't be changed.");
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost]
+        [Authorize]
+        [Route("ChangePassword")]
+        public async Task<IHttpActionResult> ChangePassword(JObject form)
+        {
+            var email = string.Empty;
+            var currentPassword = string.Empty;
+            var newPassword = string.Empty;
+            dynamic jsonObject = form;
+
+            try
+            {
+                email = jsonObject.Email.Value;
+                currentPassword = jsonObject.CurrentPassword.Value;
+                newPassword = jsonObject.NewPassword.Value;
+            }
+            catch
+            {
+                return BadRequest("Incorrect call");
+            }
+
+            var userContext = new ApplicationDbContext();
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(userContext));
+            var userASP = userManager.FindByEmail(email);
+
+            if (userASP == null)
+            {
+                return BadRequest("Not Found");
+            }
+
+            var response = await userManager.ChangePasswordAsync(userASP.Id, currentPassword, newPassword);
+            if (!response.Succeeded)
+            {
+                return BadRequest(response.Errors.FirstOrDefault());
+            }
+
+            return Ok("ok");
+        }
+
+
 
         [HttpPost]
         [Route("LoginFacebook")]

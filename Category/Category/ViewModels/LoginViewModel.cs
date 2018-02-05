@@ -26,6 +26,7 @@ namespace Category.ViewModels
         DialogService dialogService;
         ApiService apiService;
         NavigationService navigationService;
+        DataService dataService;
         #endregion
 
         #region Propiedades
@@ -96,7 +97,8 @@ namespace Category.ViewModels
             IsToggled = true;
             dialogService = new DialogService();
             apiService = new ApiService();
-         
+            dataService = new DataService();
+
             navigationService = new NavigationService();
         }
         #endregion
@@ -153,6 +155,11 @@ namespace Category.ViewModels
                 return;
             }
 
+            response.IsRemembered = IsToggled;
+            response.Password = Password;
+            dataService.DeleteAllAndInsert(response);
+
+
             var mainViewModel = MainViewModel.GetInstance();
             mainViewModel.Token = response;
             mainViewModel.Categories = new CategoriesViewModel();
@@ -193,6 +200,20 @@ namespace Category.ViewModels
             await navigationService.NavigateOnLogin("LoginFacebookView");
         }
 
+        public ICommand RecoverPasswordCommand
+        {
+            get
+            {
+                return new RelayCommand(RecoverPassword);
+            }
+        }
+
+        async void RecoverPassword()
+        {
+            MainViewModel.GetInstance().PasswordRecovery =
+            new PasswordRecoveryViewModel();
+            await navigationService.NavigateOnLogin("PasswordRecoveryView");
+        }
 
 
         #endregion
